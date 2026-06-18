@@ -169,6 +169,28 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
   .map-view { height: 400px; display: none; }
   .map-list-panel { display: none; }
   .logo-sub { display: none; }
+
+  /* Collapsible sections on mobile */
+  .filter-section.collapsible .filter-label {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0 4px;
+  }
+  .filter-section.collapsible .filter-label::after {
+    content: '▲';
+    font-size: 8px;
+    color: var(--text-hint);
+    margin-left: 4px;
+  }
+  .filter-section.collapsible.collapsed .filter-label::after {
+    content: '▼';
+  }
+  .filter-section.collapsible.collapsed .collapsible-body {
+    display: none;
+  }
 }
 </style>
 </head>
@@ -216,34 +238,37 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
           <div class="range-val">〜 <span id="priceLabel">上限なし</span></div>
         </div>
       </div>
-      <div class="filter-section">
-        <div class="filter-label">販売会社</div>
-        <div class="chip-row">
-          <span class="chip active" data-filter="maker" data-value="積水ハウス"      onclick="toggleChip(this)">積水ハウス</span>
-          <span class="chip active" data-filter="maker" data-value="大和ハウス"      onclick="toggleChip(this)">大和ハウス</span>
-          <span class="chip active" data-filter="maker" data-value="住友林業"        onclick="toggleChip(this)">住友林業</span>
-          <span class="chip active" data-filter="maker" data-value="飯田グループ"    onclick="toggleChip(this)">飯田グループ</span>
-          <span class="chip active" data-filter="maker" data-value="オープンハウス"  onclick="toggleChip(this)">オープンハウス</span>
-          <span class="chip active" data-filter="maker" data-value="旭化成ホームズ"  onclick="toggleChip(this)">旭化成ホームズ</span>
-          <span class="chip active" data-filter="maker" data-value="一条工務店"      onclick="toggleChip(this)">一条工務店</span>
-          <span class="chip active" data-filter="maker" data-value="ミサワホーム"    onclick="toggleChip(this)">ミサワホーム</span>
-          <span class="chip active" data-filter="maker" data-value="野村不動産"      onclick="toggleChip(this)">野村不動産</span>
-          <span class="chip active" data-filter="maker" data-value="三菱地所レジデンス" onclick="toggleChip(this)">三菱地所(ジオ)</span>
-          <span class="chip active" data-filter="maker" data-value="三井不動産レジデンシャル" onclick="toggleChip(this)">三井不動産</span>
-          <span class="chip active" data-filter="maker" data-value="住友不動産"      onclick="toggleChip(this)">住友不動産</span>
-          <span class="chip active" data-filter="maker" data-value="東急不動産"      onclick="toggleChip(this)">東急不動産</span>
-          <span class="chip active" data-filter="maker" data-value="三井のリハウス"  onclick="toggleChip(this)">三井のリハウス</span>
-          <span class="chip active" data-filter="maker" data-value="東急リバブル"    onclick="toggleChip(this)">東急リバブル</span>
-          <span class="chip active" data-filter="maker" data-value="グランディハウス" onclick="toggleChip(this)">グランディ</span>
-          <span class="chip active" data-filter="maker" data-value="ポラス"          onclick="toggleChip(this)">ポラス</span>
-          <span class="chip active" data-filter="maker" data-value="住宅情報館"      onclick="toggleChip(this)">住宅情報館</span>
+      <div class="filter-section collapsible">
+        <div class="filter-label" onclick="toggleSection(this)">販売会社</div>
+        <div class="collapsible-body">
+          <div class="chip-row">
+            <span class="chip active" data-filter="maker" data-value="積水ハウス"      onclick="toggleChip(this)">積水ハウス</span>
+            <span class="chip active" data-filter="maker" data-value="大和ハウス"      onclick="toggleChip(this)">大和ハウス</span>
+            <span class="chip active" data-filter="maker" data-value="住友林業"        onclick="toggleChip(this)">住友林業</span>
+            <span class="chip active" data-filter="maker" data-value="飯田グループ"    onclick="toggleChip(this)">飯田グループ</span>
+            <span class="chip active" data-filter="maker" data-value="オープンハウス"  onclick="toggleChip(this)">オープンハウス</span>
+            <span class="chip active" data-filter="maker" data-value="旭化成ホームズ"  onclick="toggleChip(this)">旭化成ホームズ</span>
+            <span class="chip active" data-filter="maker" data-value="一条工務店"      onclick="toggleChip(this)">一条工務店</span>
+            <span class="chip active" data-filter="maker" data-value="ミサワホーム"    onclick="toggleChip(this)">ミサワホーム</span>
+            <span class="chip active" data-filter="maker" data-value="野村不動産"      onclick="toggleChip(this)">野村不動産</span>
+            <span class="chip active" data-filter="maker" data-value="三菱地所レジデンス" onclick="toggleChip(this)">三菱地所(ジオ)</span>
+            <span class="chip active" data-filter="maker" data-value="三井不動産レジデンシャル" onclick="toggleChip(this)">三井不動産</span>
+            <span class="chip active" data-filter="maker" data-value="住友不動産"      onclick="toggleChip(this)">住友不動産</span>
+            <span class="chip active" data-filter="maker" data-value="東急不動産"      onclick="toggleChip(this)">東急不動産</span>
+            <span class="chip active" data-filter="maker" data-value="三井のリハウス"  onclick="toggleChip(this)">三井のリハウス</span>
+            <span class="chip active" data-filter="maker" data-value="東急リバブル"    onclick="toggleChip(this)">東急リバブル</span>
+            <span class="chip active" data-filter="maker" data-value="グランディハウス" onclick="toggleChip(this)">グランディ</span>
+            <span class="chip active" data-filter="maker" data-value="ポラス"          onclick="toggleChip(this)">ポラス</span>
+            <span class="chip active" data-filter="maker" data-value="住宅情報館"      onclick="toggleChip(this)">住宅情報館</span>
+          </div>
+          <button onclick="document.querySelectorAll('[data-filter=maker]').forEach(c=>{c.classList.remove('active');activeMakers.delete(c.dataset.value)});render();updateMap();" style="font-size:11px;color:var(--text-sub);background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:6px;padding:0;">すべて解除</button>
+          <button onclick="document.querySelectorAll('[data-filter=maker]').forEach(c=>{c.classList.add('active');activeMakers.add(c.dataset.value)});render();updateMap();" style="font-size:11px;color:var(--text-sub);background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:6px;margin-left:8px;padding:0;">すべて選択</button>
         </div>
-        <button onclick="document.querySelectorAll('[data-filter=maker]').forEach(c=>{c.classList.remove('active');activeMakers.delete(c.dataset.value)});render();updateMap();" style="font-size:11px;color:var(--text-sub);background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:6px;padding:0;">すべて解除</button>
-        <button onclick="document.querySelectorAll('[data-filter=maker]').forEach(c=>{c.classList.add('active');activeMakers.add(c.dataset.value)});render();updateMap();" style="font-size:11px;color:var(--text-sub);background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:6px;margin-left:8px;padding:0;">すべて選択</button>
       </div>
       <hr class="divider">
-      <div class="filter-section">
-        <div class="filter-label">ハウスメーカー公式</div>
+      <div class="filter-section collapsible">
+        <div class="filter-label" onclick="toggleSection(this)">ハウスメーカー公式</div>
+        <div class="collapsible-body">
         <div class="site-links">
           <a class="site-link" href="https://www.sekisuihouse.co.jp/bunjou/55shutoken/" target="_blank"><i data-icon="external-link" style="font-size:12px"></i>積水ハウス 首都圏</a>
           <a class="site-link" href="https://www.daiwahouse.co.jp/bunjo/kanto/kanagawa.asp" target="_blank"><i data-icon="external-link" style="font-size:12px"></i>大和ハウス 神奈川</a>
@@ -260,10 +285,12 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
           <a class="site-link" href="https://tochi.sumitomo-rd.co.jp/" target="_blank"><i data-icon="external-link" style="font-size:12px"></i>住友不動産 CITY GARDEN</a>
           <a class="site-link" href="https://sumai.tokyu-land.co.jp/branz-g/" target="_blank"><i data-icon="external-link" style="font-size:12px"></i>東急不動産 ブランズガーデン</a>
         </div>
+        </div>
       </div>
       <hr class="divider">
-      <div class="filter-section">
-        <div class="filter-label">物件サイトで探す</div>
+      <div class="filter-section collapsible">
+        <div class="filter-label" onclick="toggleSection(this)">物件サイトで探す</div>
+        <div class="collapsible-body">
         <div class="site-links">
           <a class="site-link" href="https://suumo.jp/ikkodate/tokyo/"    target="_blank"><i data-icon="external-link" style="font-size:12px"></i>SUUMO 東京</a>
           <a class="site-link" href="https://suumo.jp/ikkodate/kanagawa/" target="_blank"><i data-icon="external-link" style="font-size:12px"></i>SUUMO 神奈川</a>
@@ -272,6 +299,7 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
           <a class="site-link" href="https://www.athome.co.jp/kodate/chiba/" target="_blank"><i data-icon="external-link" style="font-size:12px"></i>アットホーム 千葉</a>
           <a class="site-link" href="https://www.polus.jp/area/chiba/"    target="_blank"><i data-icon="external-link" style="font-size:12px"></i>ポラス 公式</a>
           <a class="site-link" href="https://www.grandy.jp/kanagawaken/" target="_blank"><i data-icon="external-link" style="font-size:12px"></i>グランディハウス</a>
+        </div>
         </div>
       </div>
     </div>
@@ -367,6 +395,17 @@ function onPriceChange(v) {
   priceLimit = parseInt(v);
   document.getElementById('priceLabel').textContent = parseInt(v) >= 15000 ? '上限なし' : parseInt(v).toLocaleString() + '万円';
   render(); updateMap();
+}
+
+function toggleSection(el) {
+  if (window.innerWidth > 700) return;
+  el.parentElement.classList.toggle('collapsed');
+}
+
+function initCollapsible() {
+  if (window.innerWidth <= 700) {
+    document.querySelectorAll('.filter-section.collapsible').forEach(s => s.classList.add('collapsed'));
+  }
 }
 
 function toggleChip(el) {
@@ -567,6 +606,7 @@ if (typeof PROPERTIES_DATA !== 'undefined') {
   applyIcons();
   document.getElementById('updated-date').textContent =
     new Date().toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric' }) + ' 更新';
+  initCollapsible();
 } else {
   document.body.innerHTML = '<div style="padding:40px;font-family:sans-serif;color:#c00">'
     + '<b>データ読み込みエラー</b><br>properties-data.js が見つかりません。<br>'
