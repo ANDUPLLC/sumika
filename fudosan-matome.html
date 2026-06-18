@@ -120,11 +120,10 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
 .card:hover { border-color: var(--border-hover); }
 .card-img { height: 88px; display: flex; align-items: center; justify-content: center; position: relative; }
 .card-img .icon { font-size: 30px; color: rgba(0,0,0,0.15); }
-.card-fav { position: absolute; top: 7px; right: 7px; width: 26px; height: 26px; border-radius: 50%; background: var(--surface); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-.card-fav:hover { border-color: var(--pink); }
+.card-fav { position: absolute; top: 7px; right: 7px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; padding: 0; }
 .card-fav svg { color: var(--text-hint); }
+.card-fav:hover svg { color: var(--pink); }
 .card-fav.faved svg { color: var(--pink); }
-.card-fav.faved { border-color: var(--pink); background: #FFF0F5; }
 .new-label { position: absolute; top: 0; left: 0; background: var(--blue); color: #E6F1FB; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 0 0 6px 0; }
 .type-tag { position: absolute; bottom: 7px; left: 7px; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; }
 .card-body { padding: 10px 11px; flex: 1; }
