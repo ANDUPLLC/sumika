@@ -375,7 +375,13 @@ const activeTypes  = new Set(['建売','土地']);
 const activeAreas  = new Set(['東京','神奈川','千葉']);
 /* activeMakers は fetch 完了後に JSON のデータから自動生成される */
 const activeMakers = new Set();
-const favIds = new Set();
+const FAV_KEY = 'sumika_favs_v1';
+function loadFavs() {
+  try { const s = localStorage.getItem(FAV_KEY); return s ? new Set(JSON.parse(s)) : new Set(); }
+  catch { return new Set(); }
+}
+function saveFavs() { localStorage.setItem(FAV_KEY, JSON.stringify([...favIds])); }
+const favIds = loadFavs();
 let priceLimit = 15000;
 let sortMode = 'default';
 let leafletMap = null;
@@ -608,6 +614,9 @@ if (typeof PROPERTIES_DATA !== 'undefined') {
   PROPERTIES = PROPERTIES_DATA;
   render();
   applyIcons();
+  // お気に入りバッジを復元
+  const _badge = document.getElementById('fav-badge');
+  if (favIds.size > 0) { _badge.style.display='inline'; _badge.textContent=favIds.size; }
   const _now = new Date();
   document.getElementById('updated-date').textContent =
     (_now.getMonth()+1) + '/' + _now.getDate() + ' ' +
