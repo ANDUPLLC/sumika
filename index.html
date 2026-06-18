@@ -465,6 +465,7 @@ function toggleFav(id, el) {
   if (favIds.has(id)) { favIds.delete(id); }
   else { favIds.add(id); }
   el.classList.toggle('faved', favIds.has(id));
+  saveFavs();
   const badge = document.getElementById('fav-badge');
   if (favIds.size > 0) { badge.style.display='inline'; badge.textContent=favIds.size; } else { badge.style.display='none'; }
   renderFav();
@@ -616,7 +617,7 @@ if (typeof PROPERTIES_DATA !== 'undefined') {
   applyIcons();
   // お気に入りバッジを復元
   const _badge = document.getElementById('fav-badge');
-  if (favIds.size > 0) { _badge.style.display='inline'; _badge.textContent=favIds.size; }
+  if (favIds.size > 0) { _badge.style.display='inline'; _badge.textContent=favIds.size; renderFav(); }
   const _now = new Date();
   document.getElementById('updated-date').textContent =
     (_now.getMonth()+1) + '/' + _now.getDate() + ' ' +
