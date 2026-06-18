@@ -169,6 +169,8 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
   .map-view { height: 400px; display: none; }
   .map-list-panel { display: none; }
   .logo-sub { display: none; }
+  .header { padding: 0 12px; }
+  .header-right { gap: 6px; }
 
   /* Collapsible sections on mobile */
   .filter-section.collapsible .filter-label {
@@ -207,7 +209,7 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
     <div class="header-right">
       <span class="updated-badge"><i data-icon="check"></i> <span id="updated-date">読み込み中…</span></span>
       <button class="btn-primary" onclick="alert('このボタンはClaude.aiのチャット内でのみ動作します。\n\nブラウザ単体で開いている場合は、左サイドバーの「ハウスメーカー公式サイト」リンクから直接最新情報をご確認ください。')">
-        <i data-icon="refresh"></i> 最新情報をチェック
+        <i data-icon="refresh"></i> 更新
       </button>
     </div>
   </div>
@@ -604,8 +606,10 @@ if (typeof PROPERTIES_DATA !== 'undefined') {
   PROPERTIES = PROPERTIES_DATA;
   render();
   applyIcons();
+  const _now = new Date();
   document.getElementById('updated-date').textContent =
-    new Date().toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric' }) + ' 更新';
+    (_now.getMonth()+1) + '/' + _now.getDate() + ' ' +
+    String(_now.getHours()).padStart(2,'0') + ':' + String(_now.getMinutes()).padStart(2,'0');
   initCollapsible();
 } else {
   document.body.innerHTML = '<div style="padding:40px;font-family:sans-serif;color:#c00">'
