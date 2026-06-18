@@ -455,8 +455,13 @@ function render() {
 }
 
 function toggleFav(id, el) {
-  if (favIds.has(id)) { favIds.delete(id); el.classList.remove('faved'); }
-  else { favIds.add(id); el.classList.add('faved'); }
+  if (favIds.has(id)) { favIds.delete(id); }
+  else { favIds.add(id); }
+  // 一覧・お気に入り両方のカードボタンを同期
+  document.querySelectorAll(`.card-fav[onclick="toggleFav(${id},this)"]`).forEach(btn => {
+    if (favIds.has(id)) btn.classList.add('faved');
+    else btn.classList.remove('faved');
+  });
   const badge = document.getElementById('fav-badge');
   if (favIds.size > 0) { badge.style.display='inline'; badge.textContent=favIds.size; } else { badge.style.display='none'; }
   renderFav();
