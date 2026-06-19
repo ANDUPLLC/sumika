@@ -211,7 +211,7 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
     </a>
     <div class="header-right">
       <span class="updated-badge"><i data-icon="check"></i> <span id="updated-date">読み込み中…</span></span>
-      <button class="btn-primary" onclick="location.reload()">
+      <button class="btn-primary" onclick="refreshData(this)">
         <i data-icon="refresh"></i> 更新
       </button>
     </div>
@@ -368,7 +368,12 @@ select.sort-sel { font-size: 12px; color: var(--text-sub); border: 0.5px solid v
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
 <!-- 物件データ（別ファイル管理。データ更新時はこのJSファイルだけ差し替えればOK） -->
-<script src="properties-data.js"></script>
+<script>
+  (function(){
+    var v = new URLSearchParams(location.search).get('v');
+    document.write('<script src="properties-data.js' + (v ? '?v=' + v : '') + '"><\/script>');
+  })();
+</script>
 <script>
 let PROPERTIES = [];
 
@@ -608,6 +613,29 @@ function applyIcons(root) {
     svg.innerHTML = `<svg class="icon ${svgClasses}" style="${inlineStyle}" viewBox="0 0 24 24" width="1em" height="1em">${path}</svg>`;
     el.replaceWith(svg.firstChild);
   });
+}
+
+/* ── データ更新ルーチン ── */
+async function refreshData(btn) {
+  const orig = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i data-icon="refresh"></i> 取得中…'; applyIcons(btn); }
+  try {
+    const url = 'https://raw.githubusercontent.com/ANDUPLLC/sumika/main/properties-data.js?v=' + Date.now();
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const code = await res.text();
+    const fn = new Function(code + '\nreturn {data: typeof PROPERTIES_DATA !== "undefined" ? PROPERTIES_DATA : null, updated: typeof PROPERTIES_UPDATED !== "undefined" ? PROPERTIES_UPDATED : null};');
+    const result = fn();
+    if (!result.data) throw new Error('PROPERTIES_DATA が取得できませんでした');
+    PROPERTIES = result.data;
+    render();
+    applyIcons();
+    if (result.updated) document.getElementById('updated-date').textContent = result.updated;
+    if (btn) { btn.innerHTML = '<i data-icon="check"></i> 完了'; applyIcons(btn); setTimeout(() => { btn.disabled = false; btn.innerHTML = orig; applyIcons(btn); }, 1500); }
+  } catch(e) {
+    if (btn) { btn.disabled = false; btn.innerHTML = orig; applyIcons(btn); }
+    alert('データ取得に失敗しました: ' + e.message);
+  }
 }
 
 /* ── 初期化：properties-data.js の PROPERTIES_DATA を使って描画 ── */
